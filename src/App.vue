@@ -35,8 +35,7 @@
         <span class="mr-2">Add Unit</span>
         <v-icon>mdi-open</v-icon>
       </v-btn>
-      <v-btn @click="move('/Statistics')"
-      >
+      <v-btn @click="move('/Statistics')">
         <span class="mr-2">Statistics</span>
         <v-icon>mdi-open</v-icon>
       </v-btn>

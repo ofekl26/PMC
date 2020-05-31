@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper" id="background" style="background-image: url('design_files/images/registerback.png') ;">
+    <div class="wrapper" id="background" style="background-image: url('https://imgur.com/kdVhnAJ.jpg') ;">
             
             <div class="inner">
                 <div class="image-holder">
@@ -26,19 +26,27 @@
                             <i class="zmdi zmdi-arrow-right"></i>
                         </v-btn>
                     </div>
-                    <!-- <div class="w-full text-center p-t-27 p-b-239" >
-                        <a dir="ltr"  href="forgetPassword.html" class="text-dark">
+                    <!-- <div class="w-full text-center"  style="margin-top: 49%; top: 100px; font-size: 15px;"> -->
+                    <!-- <div class="w-full text-center p-t-27 p-b-239" > -->
+                        <!-- <div @click="$router.replace('/forgotpass')" class="text-dark">
                        ? שם משתמש /  סיסמא 
-                        </a>
+                        </div>
                         <span class="text-muted"  >
                             שכחת
-                        </span>
-                    </div> -->
+                        </span> -->
+                        
+                    <!-- </div> -->
 
                     <div class="w-full text-center"  style="margin-top: 49%; top: 100px; font-size: 15px;">
+                        <a @click="$router.replace('/forgotpass')" id="notUser" class="text-dark">
+                            ?שכחת סיסמה
+                        </a>
+                        <div>
                         <a @click=reg id="notUser" class="text-dark">
                             אין לך חשבון? הירשם
                         </a>
+                        </div>
+
                     </div>
                 </form>    
 

@@ -1,5 +1,5 @@
 <template>
-    <div   class="wrapper" id="background" style="background-image: url('../../design_files/images/registerback.png') ;">
+    <div   class="wrapper" id="background" style="background-image: url('https://imgur.com/kdVhnAJ.jpg') ;">
            
             <div class="inner" id="addUnit">
                 <div class="image-holder">

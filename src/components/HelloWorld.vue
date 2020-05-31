@@ -1,6 +1,7 @@
 <template>
   <v-card flat>
-    <div style="width:50%; margin:0 auto;">
+    <div style="background-image: url('https://imgur.com/kdVhnAJ.jpg') ;">
+    <div style="width:50%; margin:0 auto;" >
       <v-card-title max-width="30">
         <v-spacer></v-spacer>
       </v-card-title>
@@ -90,6 +91,7 @@
           </td>
         </template>
       </v-data-table>
+    </div>
     </div>
   </v-card>
 </template>
