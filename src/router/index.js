@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import HelloWorld from "../components/HelloWorld.vue";
 import OwnerStatistics from "../components/OwnerStatistics.vue";
 import addUnit from "../components/addUnit.vue"
+import favorites from "../components/favorites.vue"
 import Cart from "../views/cart.vue";
 import login from "../components/login.vue"
 import register from "../components/register.vue"
@@ -32,6 +33,12 @@ const routes = [
     path: "/addUnit",
     name: "addUnit",
     component: addUnit,
+    meta: {requiresAuth: true}
+  },
+  {
+    path: "/favorites",
+    name: "favorites",
+    component: favorites,
     meta: {requiresAuth: true}
   },
   {
