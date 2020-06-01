@@ -85,6 +85,7 @@
               <v-col cols="0" align-self="center">
                 <v-row justify="end" style="padding:40px">
                   <v-btn color="primary" @click="bookUnit(item.id)">Book The Unit</v-btn>
+                  <v-btn color="primary" >Add to Favorites</v-btn>
                 </v-row>
               </v-col>
             </v-row>
