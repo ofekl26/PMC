@@ -114,7 +114,7 @@ export default {
                 });
                 
                 }
-                this.$router.replace('/');
+                this.$router.replace({ name: "HelloWorld"});
                 // result.catch(function(error)
                 // {
                 //     var errorCode = error.code;
@@ -140,7 +140,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 @font-face {
   font-family: "Poppins-Regular";
   src: url("../../design_files/fonts/poppins/Poppins-Regular.ttf"); }

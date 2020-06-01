@@ -29,7 +29,7 @@
             <v-toolbar flat>
               <v-row align="center">
                 <v-col cols="1">
-                  <v-toolbar-title style="font-size:22px">Units For Rent</v-toolbar-title>
+                  <v-toolbar-title style="font-size:22px">Favorite Units</v-toolbar-title>
                 </v-col>
                 <v-col align-self="center" cols="2">
                   <v-text-field
@@ -79,7 +79,7 @@
                 </v-col>
 
                 <v-col cols="3" style="padding:20px">
-                  <v-row align="center" justify="start" style="font-size:16px">{{item.freeText}}</v-row>
+                  <v-row align="center" justify="start" style="font-size:16px">{{ item.freeText }}</v-row>
                 </v-col>
                 <v-col cols="1" style="padding:20px">
                   <v-row align="center" style="font-size:16px">
@@ -89,8 +89,7 @@
 
                 <v-col cols="0" align-self="center">
                   <v-row justify="end" style="padding:40px">
-                    <v-btn color="primary" @click="fav(item.id)">Add to Favorites</v-btn>
-                    <v-btn id="bookBtn" color="primary" @click="bookUnit(item.id)">Book The Unit</v-btn>
+                    <!-- <v-btn color="primary" @click="bookUnit(item.id)">Book The Unit</v-btn> -->
                   </v-row>
                 </v-col>
               </v-row>
@@ -104,10 +103,10 @@
 
 <script>
 import db from "../main.js";
-import * as firebase from "firebase/app";
+import firebase from "firebase";
 import "firebase/auth";
 export default {
-  name: "HelloWorld",
+  name: "FavoriteUnits",
   data() {
     return {
       search: "",
@@ -131,6 +130,8 @@ export default {
           value: "name",
           filter: value => {
             if (!this.search) return true;
+            console.log(this.search, value);
+            console.log(value.toLowerCase().includes(this.search));
             return value.toLowerCase().includes(this.search);
           }
         },
@@ -152,114 +153,53 @@ export default {
     };
   },
   created() {
-    db.collection("Units")
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          var data = doc.data();
-          this.unitdoc = doc.id;
-          this.curses(data);
-        });
-      });
-    this.loading = false;
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        // User is signed in.
-        var userType = 0;
         db.collection("Users")
           .doc("students")
           .collection("Students")
+          .doc(user.uid)
+          .collection("favoriteUnits")
           .get()
           .then(querySnapshot => {
-            this.$route.meta.t = 0;
             querySnapshot.forEach(doc => {
               var data = doc.data();
-              if (data.email == user.email) {
-                this.$route.meta.t = 1;
-              }
+              this.findRented(data.unitID)
             });
-            this.$emit("userType", this.$route.meta.t);
           });
-      } else {
-        this.$route.meta.t = -1;
       }
-      this.$emit("userType", this.$route.meta.t);
     });
+    this.loading = false;
   },
   methods: {
     findRented(currID) {
-      return new Promise(resolve => {
-        var res = false;
-        db.collection("Users")
-          .doc("students")
-          .collection("Students")
+      var res = false;
+        db.collection("Units")
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
               var data = doc.data();
-
-              if (data.bookedUnit == currID) {
-                res = true;
+              this.unitdoc = doc.id;
+              if (data.unitID == currID) {
+                this.Units.push({
+                  id: data.unitID,
+                  name: data.address,
+                  price: data.price,
+                  freeText: data.details,
+                  bookedAmount: data.booked_count,
+                  attractions: data.attDet,
+                  image: require("../assets/unit_example.jpg")
+                });
               }
             });
-            resolve(res);
           });
-      });
-    },
-
-    async curses(data) {
-      let flag = await this.findRented(data.unitID);
-      if (!flag) {
-        this.Units.push({
-          id: data.unitID,
-          name: data.address,
-          price: data.price,
-          freeText: data.details,
-          bookedAmount: data.booked_count,
-          attractions: data.attDet,
-          image: require("../assets/unit_example.jpg")
-        });
-      }
     },
 
     bookUnit(unit_id) {
-      if (this.$route.meta.t == 0) {
-        alert("Only students can rent units");
-      } else {
-        try {
-          this.$router.replace({ name: "Cart", params: { u: unit_id } });
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    },
-    fav(unit_id) {
-      if (this.$route.meta.t == 0) {
-        alert("Only students can rent units");
-      } else {
-        var user = firebase.auth().currentUser;
-        if (user) {
-          console.log(unit_id);
-          var userid = firebase.auth().currentUser.uid;
-          //   db.collection('Users').doc('students').collection('Students').get().then(querySnapshot => {
-          //       querySnapshot.forEach(doc => {
-          //         if(doc.id == userid){
-          //         var data = doc.data();
-          //         console.log(data)
-          //         }
-          //     //doc(userid).get().data();
-          // });
-          // });
-          db.collection("Users")
-            .doc("students")
-            .collection("Students")
-            .doc(userid)
-            .collection("favoriteUnits")
-            .doc(unit_id)
-            .set({
-              unitID: unit_id
-            });
-        }
+      try {
+        /*this.$router.replace({name: "", params: {"u":unit_id}});*/
+      } catch (err) {
+        console.log(err);
       }
     }
   }

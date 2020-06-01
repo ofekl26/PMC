@@ -60,6 +60,7 @@ export default {
     };
   },
   created() {
+    //this.$emit("userType",1);
     var u1 = this.$route.params.u;
     if (u1) {
       db.collection("Units")
@@ -155,7 +156,7 @@ export default {
                                     // ses_mail = ses_mail + "--NextPart--";
                                     alert("unit successfully booked\nmail sent to the unit owner");
                                     this.clearCart();
-                                    this.$route.replace({name: "Home"});
+                                    this.$route.replace("/");
                                 },this);
                         },this);
                     }
